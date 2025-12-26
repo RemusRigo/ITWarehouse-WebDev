@@ -1,0 +1,32 @@
+body {
+   background-color: #f0f0f0;
+}
+
+.div-login {
+   position: fixed;
+   top: 150px;
+   left: 50%;
+   transform: translateX(-50%);
+}
+
+.user-box {
+   position: fixed;      /* stays in the corner even when scrolling */
+   top: 10px;            /* distance from the top */
+   right: 10px;          /* distance from the right */
+   padding: 8px 12px;
+   border-radius: 4px;
+   font-size: 12px;
+   font-weight: bold;
+   font-family: Arial, sans-serif;
+}
+
+.title-box {
+   position: fixed;
+   top: 10px;
+   left: 50%;
+   transform: translateX(-50%);
+   padding: 8px 12px;
+   border-radius: 4px;
+   font-size: 20px;
+}
+

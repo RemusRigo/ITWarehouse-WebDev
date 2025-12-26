@@ -1,0 +1,35 @@
+table.devices {
+    border-collapse: collapse;
+    background: white;
+}
+
+table.devices th, table.devices td {
+    border: 1px solid #ccc;
+}
+
+table.devices th {
+    background: #eee;
+    text-align: left;
+    position: relative;
+}
+
+table.devices tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+table.devices th.sorted-asc::after {
+    content: "▲";
+    position: absolute;
+}
+
+table.devices th.sorted-desc::after {
+    content: "▼";
+    position: absolute;
+}
+
+table.devices thead th {
+    position: sticky;
+    top: 0;
+    background: #eee;
+    z-index: 1;
+}

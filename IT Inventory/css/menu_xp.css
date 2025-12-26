@@ -1,0 +1,92 @@
+/* main menu */
+.menu {
+   background: #d4d0c8;
+   border: 1px solid #808080;
+   border-radius: 8px;
+   display: inline-block;
+   font-family: Tahoma, Arial, sans-serif;
+   padding: 4px;
+}
+
+/* sub menu */
+.menu ul {
+   list-style: none;
+   border-radius: 8px;
+   margin: 0;
+   padding: 0;
+}
+
+/* main menu selected item */
+.menu > ul > li {
+   float: left;
+   position: relative;
+   padding: 4px 12px;
+   cursor: default;
+   border: 1px solid transparent;
+   border-radius: 12px;
+}
+
+.menu > ul > li:hover {
+    background: rgba(0, 0, 255, 0.2);
+    color: black;
+    border: 1px solid #003c74;
+}
+
+.menu ul li ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #d4d0c8;
+    border: 1px solid #808080;
+    padding: 2px 0;
+    min-width: 140px;
+    z-index: 999;
+}
+
+/* Show drop-down on hover */
+.menu ul li:hover ul {
+    display: block;
+}
+
+/* Drop-down items */
+.menu ul li ul li {
+    padding: 4px 12px;
+    white-space: nowrap;
+    border: 1px solid transparent;
+   border-radius: 12px;
+}
+
+/* hover effect for submenu */
+.menu ul li ul li:hover {
+    background: rgba(0, 0, 255, 0.2);
+    color: white;
+    border: 1px solid #003c74;
+}
+
+.menu ul li ul li.sep {
+    height: 1px;
+    margin: 4px 6px;
+    padding: 0;
+    background: #b0aca4;
+    border: none;
+    border-radius: 0;
+}
+
+.menu a {
+   display: block; /* ensures full clickable area */
+   text-decoration: none;
+   color: inherit;
+}
+
+.menu a:visited {
+    color: inherit;
+}
+
+.menu a:hover {
+    text-decoration: none;
+}
+
+.menu a:focus {
+    outline: none;
+}
