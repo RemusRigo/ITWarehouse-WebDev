@@ -4,35 +4,55 @@
 //      © 2025 Remus Rigo
 //         2025-12-23
 //   show devices
-
-//echo $showDevice;
 ?>
 
 <?php
-$sql = "SELECT
-   d.id,
-   d.name,
-   d.device,
-   d.manufacturer,
-   d.model,
-   c.name AS category_name,
-   d.inventory,
-   d.ip,
-   d.mac,
-   d.bt,
-   d.sn,
-   d.pn,
-   d.firmware,
-   d.location1,
-   d.location2,
-   s.name AS status_name,
-   d.purchased,
-   d.disposed,
-   d.notes
-   FROM devices d
-   LEFT JOIN category c ON d.category_id = c.id
-   LEFT JOIN status s ON d.status_id = s.id
-   ORDER BY d.name ASC";
+
+if ($showDevice == "all")
+{
+   $sql = "
+      SELECT
+         d.id, d.name,
+         d.device, d.manufacturer, d.model,
+         c.name AS category_name,
+         d.inventory,
+         d.ip, d.mac, d.bt,
+         d.sn, d.pn,
+         d.firmware,
+         d.location1, d.location2,
+         s.name AS status_name,
+         d.purchased, d.disposed,
+         d.notes
+      FROM devices d
+      LEFT JOIN category c ON d.category_id = c.id
+      LEFT JOIN status s ON d.status_id = s.id
+      ORDER BY d.name ASC";
+}
+else
+{
+   // check if value is number and if it is in category range
+   if (is_numeric($showDevice) && $showDevice >= 1 && $showDevice <= 9)
+   {
+      $sql = "
+         SELECT
+            d.id, d.name,
+            d.device, d.manufacturer, d.model,
+            c.name AS category_name,
+            d.inventory,
+            d.ip, d.mac, d.bt,
+            d.sn, d.pn,
+            d.firmware,
+            d.location1, d.location2,
+            s.name AS status_name,
+            d.purchased, d.disposed,
+            d.notes
+         FROM devices d
+         LEFT JOIN category c ON d.category_id = c.id
+         LEFT JOIN status s ON d.status_id = s.id
+         WHERE category_id = $showDevice
+         ORDER BY d.name ASC";
+   }
+}
 
 $conn = new mysqli("localhost", "root", "", "it_db");
 if ($conn->connect_error)

@@ -3,7 +3,7 @@
 //   IT Inventory
 //      © 2025 Remus Rigo
 //         2025-12-17
-//   footer 
+//   header 
 ?>
 <!DOCTYPE html>
 <html lang="en">

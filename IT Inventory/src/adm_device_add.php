@@ -1,4 +1,10 @@
 <?php
+//-------------------------------------------------------------------------------------------------
+//   IT Inventory
+//      © 2025 Remus Rigo
+//         2025-12-28
+//   add device form
+
 // connect to DB
 $pdo = new PDO("mysql:host=localhost;dbname=it_db;charset=utf8", "root", "");
 
@@ -12,13 +18,12 @@ $statuses = $stmt_status->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
-<form action="adm_device_insert.php" method="post">
+<form action="src/adm_device_insert.php" method="post">
 <table class="new_device">
    <tr><td><label>Name</label></td><td><input type="text" name="name" required></td></tr>
    <tr><td><label>Device</label></td><td><input type="text" name="device"></td></tr>
    <tr><td><label>Manufacturer</label></td><td><input type="text" name="manufacturer"></td></tr>
    <tr><td><label>Model</label></td><td><input type="text" name="model"></td></tr>
-   <tr><td><label>Type</label></td><td><input type="text" name="type"></td></tr>
 
    <tr><td><label>Category</label></td><td>
    <select name="category_id" id="category">
