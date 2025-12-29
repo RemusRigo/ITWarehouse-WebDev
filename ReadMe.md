@@ -27,7 +27,7 @@ A tool to monitor all IT devices
 * 2025-12-27: Add: Filter by category
 * 2025-12-26: Add: Add new device
 * 2025-12-16: Add: Menu for Standard/Admin user
-* 2025-12-16: Project started
+* 2025-12-11: Project started
 
 ## 
 
