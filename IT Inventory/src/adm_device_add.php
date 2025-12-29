@@ -41,6 +41,7 @@ $statuses = $stmt_status->fetchAll(PDO::FETCH_ASSOC);
    <tr><td><label>Serial Number (SN)</label></td><td><input type="text" name="sn"></td></tr>
    <tr><td><label>Part Number (PN)</label></td><td><input type="text" name="pn"></td></tr>
    <tr><td><label>Firmware</label></td><td><input type="text" name="firmware"></td></tr>
+   <tr><td><label>Custodian</label></td><td><input type="text" name="custodian"></td></tr>
    <tr><td><label>Production Line</label></td><td><input type="text" name="location1"></td></tr>
    <tr><td><label>Workstation</label></td><td><input type="text" name="location2"></td></tr>
 

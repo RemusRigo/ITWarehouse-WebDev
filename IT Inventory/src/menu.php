@@ -27,6 +27,7 @@
       <li>Admin
          <ul>
             <li><a href="index.php?adm=add_device">Add device</a></li>
+            <li><a href="index.php?edit=x">Edit device</a></li>
             <li class="sep"></li>
          </ul>
       </li>

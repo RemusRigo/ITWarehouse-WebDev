@@ -30,6 +30,7 @@ $bt = EmptyToNull($_POST['bt']);
 $sn = EmptyToNull($_POST['sn']);
 $pn = EmptyToNull($_POST['pn']);
 $firmware = EmptyToNull($_POST['firmware']);
+$custodian = EmptyToNull($_POST['custodian']);
 $location1 = EmptyToNull($_POST['location1']);
 $location2 = EmptyToNull($_POST['location2']);
 $purchased = EmptyToNull($_POST['purchased']);
@@ -41,43 +42,21 @@ $notes = EmptyToNull($_POST['notes']);
 $stmt = $conn->prepare("INSERT INTO devices (
    name,
    device,
-   manufacturer,
-   model,
-   category_id,
-   inventory,
-   ip,
-   mac,
-   bt,
-   sn,
-   pn,
-   firmware,
-   location1,
-   location2,
-   status_id,
-   purchased,
-   disposed,
+   manufacturer, model, category_id, inventory,
+   ip, mac, bt, sn, pn, firmware,
+   custodian, location1, location2,
+   status_id, purchased, disposed,
    notes)
-   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ");
 
-$stmt->bind_param("ssssssssssssssssss",
+$stmt->bind_param("sssssssssssssssssss",
    $name,
    $device,
-   $manufacturer,
-   $model,
-   $category,
-   $inventory,
-   $ip,
-   $mac,
-   $bt,
-   $sn,
-   $pn,
-   $firmware,
-   $location1,
-   $location2,
-   $status,
-   $purchased,
-   $disposed,
+   $manufacturer, $model, $category, $inventory,
+   $ip, $mac, $bt, $sn, $pn, $firmware,
+   $custodian, $location1, $location2,
+   $status, $purchased, $disposed,
    $notes);
 
 if ($stmt->execute())

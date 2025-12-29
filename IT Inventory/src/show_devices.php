@@ -13,15 +13,10 @@ if ($showDevice == "all")
    $sql = "
       SELECT
          d.id, d.name,
-         d.device, d.manufacturer, d.model,
-         c.name AS category_name,
-         d.inventory,
-         d.ip, d.mac, d.bt,
-         d.sn, d.pn,
-         d.firmware,
-         d.location1, d.location2,
-         s.name AS status_name,
-         d.purchased, d.disposed,
+         d.device, d.manufacturer, d.model, c.name AS category_name, d.inventory,
+         d.ip, d.mac, d.bt, d.sn, d.pn, d.firmware,
+         d.custodian, d.location1, d.location2,
+         s.name AS status_name, d.purchased, d.disposed,
          d.notes
       FROM devices d
       LEFT JOIN category c ON d.category_id = c.id
@@ -36,15 +31,10 @@ else
       $sql = "
          SELECT
             d.id, d.name,
-            d.device, d.manufacturer, d.model,
-            c.name AS category_name,
-            d.inventory,
-            d.ip, d.mac, d.bt,
-            d.sn, d.pn,
-            d.firmware,
-            d.location1, d.location2,
-            s.name AS status_name,
-            d.purchased, d.disposed,
+            d.device, d.manufacturer, d.model, c.name AS category_name, d.inventory,
+            d.ip, d.mac, d.bt, d.sn, d.pn, d.firmware,
+            d.custodian, d.location1, d.location2,
+            s.name AS status_name, d.purchased, d.disposed,
             d.notes
          FROM devices d
          LEFT JOIN category c ON d.category_id = c.id
@@ -71,7 +61,7 @@ if ($result->num_rows > 0)
    <th>Device</th>
    <th>Manufacturer</th>
    <th>Model</th>
-   <th>Categoty</th>
+   <th>Category</th>
    <th>Inventory</th>
    <th>IP</th>
    <th>MAC</th>
@@ -79,6 +69,7 @@ if ($result->num_rows > 0)
    <th>SN</th>
    <th>PN</th>
    <th>Firmware</th>
+   <th>Custodian</th>
    <th>Production Line</th>
    <th>Workstation</th>
    <th>Status</th>
@@ -91,7 +82,16 @@ if ($result->num_rows > 0)
    while ($row = $result->fetch_assoc())
    {
       echo "<tr>";
-      echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+
+      if( $loggedUser=="admin" )
+      {
+         echo "<td><a href=index.php?edit=" .htmlspecialchars($row['id']) . " class=\"nolink\">" . htmlspecialchars($row['id']) . "</td>";
+      }
+      else
+      {
+         echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+      }    
+
       echo "<td>" . htmlspecialchars($row['name']) . "</td>";
       echo "<td>" . htmlspecialchars($row['device']) . "</td>";
       echo "<td>" . htmlspecialchars($row['manufacturer']) . "</td>";
@@ -104,6 +104,7 @@ if ($result->num_rows > 0)
       echo "<td>" . htmlspecialchars($row['sn']) . "</td>";
       echo "<td>" . htmlspecialchars($row['pn']) . "</td>";
       echo "<td>" . htmlspecialchars($row['firmware']) . "</td>";
+      echo "<td>" . htmlspecialchars($row['custodian']) . "</td>";
       echo "<td>" . htmlspecialchars($row['location1']) . "</td>";
       echo "<td>" . htmlspecialchars($row['location2']) . "</td>";
       echo "<td>" . htmlspecialchars($row['status_name']) . "</td>";
