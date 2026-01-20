@@ -1,9 +1,11 @@
-<?php
-//-------------------------------------------------------------------------------------------------
+<!-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         2025-12-28
+//         v20260116
 //   add device form
+-------------------------------------------------------------------------------------------------->
+
+<?php
 
 // connect to DB
 $pdo = new PDO("mysql:host=localhost;dbname=it_db;charset=utf8", "root", "");
@@ -16,6 +18,10 @@ $categories = $stmt_cat->fetchAll(PDO::FETCH_ASSOC);
 $stmt_status = $pdo->query("SELECT id, name FROM status ORDER BY id ASC");
 $statuses = $stmt_status->fetchAll(PDO::FETCH_ASSOC);
 
+// Fetch IP's
+$stmt_status = $pdo->query("SELECT * FROM ip ORDER BY id ASC");
+$ip_list = $stmt_status->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <form action="src/adm_device_insert.php" method="post">
@@ -25,7 +31,7 @@ $statuses = $stmt_status->fetchAll(PDO::FETCH_ASSOC);
    <tr><td><label>Manufacturer</label></td><td><input type="text" name="manufacturer"></td></tr>
    <tr><td><label>Model</label></td><td><input type="text" name="model"></td></tr>
 
-   <tr><td><label>Category</label></td><td>
+<tr><td><label>Category</label></td><td>
    <select name="category_id" id="category">
       <option value="">-- Select category --</option>
       <?php foreach ($categories as $cat): ?>
@@ -35,7 +41,16 @@ $statuses = $stmt_status->fetchAll(PDO::FETCH_ASSOC);
    </td></tr>
 
    <tr><td><label>Inventory</label></td><td><input type="text" name="inventory"></td></tr>
-   <tr><td><label>IP Address</label></td><td><input type="text" name="ip" placeholder="192.168.001.010" pattern="^[0-9]{1,3}(\.[0-9]{1,3}){3}$"></td></tr>
+
+   <tr><td><label>IP Address</label></td><td>
+   <select name="ip_id" id="ip">
+      <option value="">-- Select category --</option>
+      <?php foreach ($ip_list as $ip): ?>
+         <option value="<?= $ip['ID'] ?>"><?= htmlspecialchars($ip['IPv4']) ?></option>
+      <?php endforeach; ?>
+   </select>
+   </td></tr>
+
    <tr><td><label>MAC Address</label></td><td><input type="text" name="mac" placeholder="AA:BB:CC:DD:EE:FF" pattern="^([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2}$"></td></tr>
    <tr><td><label>BT</label></td><td><input type="text" name="bt"></td></tr>
    <tr><td><label>Serial Number (SN)</label></td><td><input type="text" name="sn"></td></tr>

@@ -1,9 +1,11 @@
-<?php
-//-------------------------------------------------------------------------------------------------
+<!-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         2025-12-28
+//         v20260116
 //   add device - insert into DB
+-------------------------------------------------------------------------------------------------->
+
+<?php
 
 $conn = new mysqli("localhost", "root", "", "it_db");
 
@@ -24,7 +26,7 @@ $manufacturer = EmptyToNull($_POST['manufacturer']);
 $model = EmptyToNull($_POST['model']);
 $category = EmptyToNull($_POST['category_id']);
 $inventory = EmptyToNull($_POST['inventory']);
-$ip = EmptyToNull($_POST['ip']);
+$ip = EmptyToNull($_POST['ip_id']);
 $mac = EmptyToNull($_POST['mac']);
 $bt = EmptyToNull($_POST['bt']);
 $sn = EmptyToNull($_POST['sn']);
@@ -43,7 +45,7 @@ $stmt = $conn->prepare("INSERT INTO devices (
    name,
    device,
    manufacturer, model, category_id, inventory,
-   ip, mac, bt, sn, pn, firmware,
+   ip_id, mac, bt, sn, pn, firmware,
    custodian, location1, location2,
    status_id, purchased, disposed,
    notes)
@@ -68,9 +70,9 @@ else
    echo "Error: " . $stmt->error;
 }
 
-echo "<p>Returning to the previous page in <span id='countdown'>5</span> seconds…</p>";
+echo "<p>Returning to the previous page in <span id='countdown'>3</span> seconds…</p>";
 echo "<script>
-   let seconds = 5;
+   let seconds = 3;
    const countdown = document.getElementById('countdown');
    const timer = setInterval(() =>
    {

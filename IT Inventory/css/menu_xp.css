@@ -1,10 +1,17 @@
-/* main menu */
+/**************************************************************************************************
+* Windows XP - menu style
+*    © 2025 Remus Rigo
+*       v20260114
+**************************************************************************************************/
+
 .menu {
    background: #d4d0c8;
    border: 1px solid #808080;
    border-radius: 8px;
+   color: black;
    display: inline-block;
    font-family: Tahoma, Arial, sans-serif;
+   font-size: 12px;
    padding: 4px;
 }
 
@@ -73,6 +80,10 @@
     border-radius: 0;
 }
 
+
+
+/* Make links look normal text */
+
 .menu a {
    display: block; /* ensures full clickable area */
    text-decoration: none;
@@ -89,4 +100,10 @@
 
 .menu a:focus {
     outline: none;
+}
+
+.menu a {
+   display: block; /* ensures full clickable area */
+   text-decoration: none;
+   color: inherit;
 }

@@ -1,10 +1,9 @@
-<?php
-//-------------------------------------------------------------------------------------------------
+<!-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         2025-12-23
+//         v20260116
 //   show devices
-?>
+-------------------------------------------------------------------------------------------------->
 
 <?php
 
@@ -12,35 +11,37 @@ if ($showDevice == "all")
 {
    $sql = "
       SELECT
-         d.id, d.name,
-         d.device, d.manufacturer, d.model, c.name AS category_name, d.inventory,
-         d.ip, d.mac, d.bt, d.sn, d.pn, d.firmware,
-         d.custodian, d.location1, d.location2,
-         s.name AS status_name, d.purchased, d.disposed,
-         d.notes
-      FROM devices d
-      LEFT JOIN category c ON d.category_id = c.id
-      LEFT JOIN status s ON d.status_id = s.id
-      ORDER BY d.name ASC";
+         devices.id, devices.name,
+         devices.device, devices.manufacturer, devices.model, category.name AS category_name, devices.inventory,
+         ip.IPv4 AS ip_id, devices.mac, devices.bt, devices.sn, devices.pn, devices.firmware,
+         devices.custodian, devices.location1, devices.location2,
+         status.name AS status_name, devices.purchased, devices.disposed,
+         devices.notes
+      FROM devices
+      LEFT JOIN category ON devices.category_id = category.id
+      LEFT JOIN ip ON devices.ip_id = ip.ID
+      LEFT JOIN status ON devices.status_id = status.id
+      ORDER BY devices.name ASC";
 }
 else
 {
    // check if value is number and if it is in category range
-   if (is_numeric($showDevice) && $showDevice >= 1 && $showDevice <= 9)
+   if (is_numeric($showDevice)) // && $showDevice >= 1 && $showDevice <= 9)
    {
       $sql = "
          SELECT
-            d.id, d.name,
-            d.device, d.manufacturer, d.model, c.name AS category_name, d.inventory,
-            d.ip, d.mac, d.bt, d.sn, d.pn, d.firmware,
-            d.custodian, d.location1, d.location2,
-            s.name AS status_name, d.purchased, d.disposed,
-            d.notes
-         FROM devices d
-         LEFT JOIN category c ON d.category_id = c.id
-         LEFT JOIN status s ON d.status_id = s.id
+            devices.id, devices.name,
+            devices.device, devices.manufacturer, devices.model, category.name AS category_name, devices.inventory,
+            ip.IPv4 as ip_id, devices.mac, devices.bt, devices.sn, devices.pn, devices.firmware,
+            devices.custodian, devices.location1, devices.location2,
+            status.name AS status_name, devices.purchased, devices.disposed,
+            devices.notes
+         FROM devices
+         LEFT JOIN category ON devices.category_id = category.id
+         LEFT JOIN ip ON devices.ip_id = ip.ID
+         LEFT JOIN status ON devices.status_id = status.id
          WHERE category_id = $showDevice
-         ORDER BY d.name ASC";
+         ORDER BY devices.name ASC";
    }
 }
 
@@ -98,7 +99,7 @@ if ($result->num_rows > 0)
       echo "<td>" . htmlspecialchars($row['model']) . "</td>";
       echo "<td>" . htmlspecialchars($row['category_name']) . "</td>";
       echo "<td>" . htmlspecialchars($row['inventory']) . "</td>";
-      echo "<td>" . htmlspecialchars($row['ip']) . "</td>";
+      echo "<td>" . htmlspecialchars($row['ip_id']) . "</td>";
       echo "<td>" . htmlspecialchars($row['mac']) . "</td>";
       echo "<td>" . htmlspecialchars($row['bt']) . "</td>";
       echo "<td>" . htmlspecialchars($row['sn']) . "</td>";

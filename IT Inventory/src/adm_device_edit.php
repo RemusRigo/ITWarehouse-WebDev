@@ -1,9 +1,11 @@
-<?php
-//-------------------------------------------------------------------------------------------------
+<!-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         2025-12-28
-//   add device form
+//         v20260114
+//   edit device form
+-------------------------------------------------------------------------------------------------->
+
+<?php
 
 $id = $_GET['edit'] ?? null;
 if ($id === null)
@@ -35,6 +37,7 @@ if (!$device)
 
 $categories = $pdo->query("SELECT * FROM category ORDER BY name")->fetchAll();
 $statuses = $pdo->query("SELECT * FROM status ORDER BY name")->fetchAll();
+$ip_list = $pdo->query("SELECT * FROM ip ORDER BY ID")->fetchAll();
 
 ?>
 
@@ -59,7 +62,19 @@ $statuses = $pdo->query("SELECT * FROM status ORDER BY name")->fetchAll();
    </td></tr>
 
    <tr><td><label>Inventory</label></td><td><input type="text" name="inventory" value="<?= htmlspecialchars($device['inventory']) ?>"></td></tr>
-   <tr><td><label>IP Address</label></td><td><input type="text" name="ip" value="<?= htmlspecialchars($device['ip']) ?>"></td></tr>
+
+   <tr><td><label>IP Address</label></td><td>
+   <select name="ip_id" id="ip">
+      <option value="">-- Select IP --</option>
+      <?php foreach ($ip_list as $ip): ?>
+         <option value="<?= $ip['ID'] ?>"
+            <?= $ip['ID'] == $device['ip_id'] ? 'selected' : '' ?>>
+            <?= htmlspecialchars($ip['IPv4']) ?>
+         </option>
+      <?php endforeach; ?>
+   </select>
+   </td></tr>
+
    <tr><td><label>MAC Address</label></td><td><input type="text" name="mac" value="<?= htmlspecialchars($device['mac']) ?>"></td></tr>
    <tr><td><label>BT</label></td><td><input type="text" name="bt" value="<?= htmlspecialchars($device['bt']) ?>"></td></tr>
    <tr><td><label>Serial Number (SN)</label></td><td><input type="text" name="sn" value="<?= htmlspecialchars($device['sn']) ?>"></td></tr>

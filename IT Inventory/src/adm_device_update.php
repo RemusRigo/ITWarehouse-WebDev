@@ -1,10 +1,11 @@
-<?php
-//-------------------------------------------------------------------------------------------------
+<!-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         2025-12-28
+//         v20260114
 //   update device
+-------------------------------------------------------------------------------------------------->
 
+<?php
 $pdo = new PDO("mysql:host=localhost;dbname=it_db;charset=utf8", "root", "");
 
 // Insert NULL is value is empty
@@ -21,7 +22,7 @@ $manufacturer = EmptyToNull($_POST['manufacturer']);
 $model = EmptyToNull($_POST['model']);
 $category_id = EmptyToNull($_POST['category_id']);
 $inventory = EmptyToNull($_POST['inventory']);
-$ip = EmptyToNull($_POST['ip']);
+$ip_id = EmptyToNull($_POST['ip_id']);
 $mac = EmptyToNull($_POST['mac']);
 $bt = EmptyToNull($_POST['bt']);
 $sn = EmptyToNull($_POST['sn']);
@@ -38,17 +39,17 @@ $notes = EmptyToNull($_POST['notes']);
 $sql = "UPDATE devices SET
     name = ?, device = ?,
     manufacturer = ?, model = ?, category_id = ?, inventory = ?,
-    ip = ?, mac = ?, bt = ?, sn = ?, pn = ?, firmware = ?,
+    ip_id = ?, mac = ?, bt = ?, sn = ?, pn = ?, firmware = ?,
     custodian = ?, location1 = ?, location2 = ?,
     status_id = ?, purchased = ?, disposed = ?, notes = ?
     WHERE id = ?";
 
 $stmt = $pdo->prepare($sql);
 
-$stmt->execute([$name, $device, $manufacturer, $model, $category_id, $inventory, $ip, $mac, $bt, $sn, $pn, $firmware,
+$stmt->execute([$name, $device, $manufacturer, $model, $category_id, $inventory, $ip_id, $mac, $bt, $sn, $pn, $firmware,
    $custodian, $location1, $location2, $status_id, $purchased, $disposed, $notes, $id]);
 
-header("Location: ../index.php");
-exit;
+   include 'go_back2.php';
+   exit;
 
 ?>
