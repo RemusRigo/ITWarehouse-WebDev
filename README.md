@@ -22,6 +22,9 @@ A tool to monitor all IT devices
 
 ## Roadmap
 
+* 2026-03-02: Edit: use JSON to save language settings instead of php file
+* 2026-02-27: Add: Language support
+* 2026-02-27: Add: Implement Location
 * 2026-01-16: Edit: Link IP to device
 * 2026-01-15: Add: Add IP Range form
 * 2026-01-14: Edit: Add CSS style for login page
