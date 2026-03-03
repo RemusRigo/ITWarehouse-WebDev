@@ -1,0 +1,108 @@
+/**************************************************************************************************
+* IT Inventory
+*    © 2025 Remus Rigo
+*       v20260114
+*   main page style
+**************************************************************************************************/
+
+body {
+   background-color: #f0f0f0;
+   display: flex;
+   flex-direction: column;
+   font-family: Arial, sans-serif;
+   height: 100vh;
+}
+
+.header {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: 60px;
+   background: #2c3e50;
+   color: white;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 0 20px;
+   box-sizing: border-box;
+   z-index: 1000;
+}
+
+.header .menu {
+   text-align: left;
+}
+
+.header .title {
+   flex: 1;
+   text-align: center;
+   font-weight: bold;
+}
+
+.header .user {
+   flex: 1;
+   text-align: right;
+}
+
+.content {
+   margin-top: 60px; /* same as header height */
+   height: calc(100vh - 60px);
+   overflow-y: auto;
+   padding: 10px;
+   box-sizing: border-box;
+}
+
+table.devices {
+   border-collapse: collapse;
+   /* border-collapse: separate; */
+   /* border-spacing: 8px; */
+   background: white;
+   margin-top: 30px;
+   margin-bottom: 30px;
+}
+
+table.devices th, table.devices td {
+    border: 1px solid #ccc;
+}
+
+table.devices th {
+   background: #eee;
+   position: relative;
+   text-align: left;
+   white-space: nowrap;
+}
+
+table.devices tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+table.devices th.sorted-asc::after {
+    content: "▲";
+    position: absolute;
+}
+
+table.devices th.sorted-desc::after {
+    content: "▼";
+    position: absolute;
+}
+
+table.devices thead th {
+   position: sticky;
+   top: 0;
+   background: #eee;
+   padding: 3px 5px;
+   z-index: 1;
+}
+
+table.devices td {
+   white-space: nowrap;
+   padding: 3px 5px;
+}
+
+/* Make links look normal text */
+
+a.nolink {
+   color: inherit;
+   display: block; /* ensures full clickable area */
+   text-decoration: none;
+}

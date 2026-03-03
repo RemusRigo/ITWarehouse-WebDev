@@ -1,0 +1,30 @@
+/**************************************************************************************************
+* IT Inventory
+*    © 2025 Remus Rigo
+*       v20260113
+*   edit page style
+**************************************************************************************************/
+
+table.new_device {
+   margin-top: 10px;
+}
+
+table.new_device input[type="text"],
+table.new_device input[type="date"],
+table.new_device select,
+table.new_device textarea {
+   width: 210px;
+   box-sizing: border-box; 
+}
+
+table.new_ip {
+   margin-top: 5px;
+}
+
+table.new_ip input[type="text"],
+table.new_ip input[type="date"],
+table.new_ip select,
+table.new_ip textarea {
+   width: 50px;
+   box-sizing: border-box; 
+}
