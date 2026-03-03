@@ -6,7 +6,6 @@
 //   show devices
 //-------------------------------------------------------------------------------------------------
 
-
 if ($showDevice == "all")
 {
    $sql = "SELECT
@@ -30,7 +29,7 @@ if ($showDevice == "all")
 else
 {
    // check if value is number and if it is in category range
-   if (is_numeric($showDevice)) // && $showDevice >= 1 && $showDevice <= 9)
+   if (is_numeric($showDevice))
    {
       $sql = "SELECT
             devices.id, devices.name,
@@ -62,50 +61,39 @@ if ($conn->connect_error)
 $result = $conn->query($sql);
 if ($result->num_rows > 0)
 {
-   $config = json_decode(file_get_contents('src/config.json'), true);
-   $langCode = $config['language'];
-   $langFile = "src/lng/{$langCode}.json";
-   if (file_exists($langFile))
-   {
-      $cfgData = json_decode(file_get_contents($langFile), true);
-   }
-   else
-   {
-      $cfgData = []; // fallback if file missing
-   }
    
-   echo "<table name='devices' id='devices' class='devices'>
-   <thead>
-   <tr>
-   <th>ID</th>
-   <th>Name</th>
-   <th>Device</th>
-   <th>Manufacturer</th>
-   <th>Model</th>
-   <th>Category</th>
-   <th>Inventory</th>
-   <th>IP</th>
-   <th>IP</th>
-   <th>MAC</th>
-   <th>BT</th>
-   <th>SN</th>
-   <th>IMEI1</th>
-   <th>IMEI2</th>
-   <th>PN</th>
-   <th>Firmware</th>
-   <th>Custodian</th>
-   <th>{$cfgData['Location1']}</th>
-   <th>{$cfgData['Location2']}</th>
-   <th>Status</th>
-   <th>Purchased</th>
-   <th>Disposed</th>
-   <th>Notes</th>
-   </tr>
-   </thead><tbody>";
+   echo "\n<table name='devices' id='devices' class='devices'>";
+   echo "<thead>";
+   echo "\n<tr>";
+   echo "<th>ID</th>";
+   echo "<th>{$cfgData['Name']}</th>";
+   echo "<th>{$cfgData['Device']}</th>";
+   echo "<th>{$cfgData['Manufacturer']}</th>";
+   echo "<th>{$cfgData['Model']}</th>";
+   echo "<th>{$cfgData['Category']}</th>";
+   echo "<th>{$cfgData['Inventory']}</th>";
+   echo "<th>{$cfgData['IP1']}</th>";
+   echo "<th>{$cfgData['IP2']}</th>";
+   echo "<th>{$cfgData['MAC']}</th>";
+   echo "<th>{$cfgData['BT']}</th>";
+   echo "<th>{$cfgData['SN']}</th>";
+   echo "<th>{$cfgData['IMEI1']}</th>";
+   echo "<th>{$cfgData['IMEI2']}</th>";
+   echo "<th>{$cfgData['PN']}</th>";
+   echo "<th>{$cfgData['Firmware']}</th>";
+   echo "<th>{$cfgData['Custodian']}</th>";
+   echo "<th>{$cfgData['Location1']}</th>";
+   echo "<th>{$cfgData['Location2']}</th>";
+   echo "<th>{$cfgData['Status']}</th>";
+   echo "<th>{$cfgData['Purchased']}</th>";
+   echo "<th>{$cfgData['Disposed']}</th>";
+   echo "<th>{$cfgData['Notes']}</th>";
+   echo "</tr>";
+   echo "</thead><tbody>";
 
    while ($row = $result->fetch_assoc())
    {
-      echo "<tr>";
+      echo "\n<tr>";
 
       if( $loggedUser=="admin" )
       {
@@ -144,8 +132,5 @@ if ($result->num_rows > 0)
 }
 else
 {
-   echo "<p>No devices found.";
+   echo "\n<p>No devices found.";
 }
-?>
-
-</table>

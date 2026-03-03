@@ -6,6 +6,7 @@
 //   Add/Update device
 //-------------------------------------------------------------------------------------------------
 
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'GET')
 {
    $pdo = new PDO("mysql:host=localhost;dbname=it_db;charset=utf8", "root", "");
@@ -49,13 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    {
       echo "<tr><td><label>ID</label></td><td><input type='text' name='id' value='". htmlspecialchars($device['id'])."' readonly></td></tr>";
    }
-   echo "<tr><td><label>Name</label></td><td><input type='text' name='name' value='". ($newDevice ? "'" : htmlspecialchars($device['name'])."' required")."></td></tr>";
-   echo "<tr><td><label>Device</label></td><td><input type='text' name='device' value='". ($newDevice ? "'" : htmlspecialchars($device['device']))."'></td></tr>";
-   echo "<tr><td><label>Manufacturer</label></td><td><input type='text' name='manufacturer' value='". ($newDevice ? "'" : htmlspecialchars($device['manufacturer']))."'></td></tr>";
-   echo "<tr><td><label>Model</label></td><td><input type='text' name='model' value='". ($newDevice ? "'" : htmlspecialchars($device['model']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['Name']}</label></td><td><input type='text' name='name' value='". ($newDevice ? "'" : htmlspecialchars($device['name'])."' required")."></td></tr>";
+   echo "<tr><td><label>{$cfgData['Device']}</label></td><td><input type='text' name='device' value='". ($newDevice ? "'" : htmlspecialchars($device['device']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['Manufacturer']}</label></td><td><input type='text' name='manufacturer' value='". ($newDevice ? "'" : htmlspecialchars($device['manufacturer']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['Model']}</label></td><td><input type='text' name='model' value='". ($newDevice ? "'" : htmlspecialchars($device['model']))."'></td></tr>";
    
    // Category
-   echo "<tr><td><label>Category</label></td><td>";
+   echo "<tr><td><label>{$cfgData['Category']}</label></td><td>";
    echo "<select name='category_id' id='category'>";
    echo "<option value=''>-- Select category --</option>";
    foreach ($categories as $cat)
@@ -66,10 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    echo "</select>";
    echo "</td></tr>";
    
-   echo "<tr><td><label>Inventory</label></td><td><input type='text' name='inventory' value='". ($newDevice ? "'" : htmlspecialchars($device['inventory']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['Inventory']}</label></td><td><input type='text' name='inventory' value='". ($newDevice ? "'" : htmlspecialchars($device['inventory']))."'></td></tr>";
    
    // IP Address 1
-   echo "<tr><td><label>IP Address 1</label></td><td>";
+   echo "<tr><td><label>{$cfgData['IP1']}</label></td><td>";
    echo "<select name='ip_id' id='ip'>";
    echo "<option value=''>-- Select IP --</option>";
    foreach ($ip_list as $ip)
@@ -80,20 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    echo "</select>";
    echo "</td></tr>";
    
-   // IP Address 2
-   echo "<tr><td><label>IP Address 2</label></td><td>";
-   echo "<select name='ip2_id' id='ip'>";
-   echo "<option value=''>-- Select IP --</option>";
-   foreach ($ip_list as $ip)
-   {
-      $selected = $ip['ID'] == $device['ip2_id'] ? 'selected' : '';
-      echo "<option value='". htmlspecialchars($ip['ID']) . "' $selected>". htmlspecialchars($ip['IPv4'])."</option>";
-   }
-   echo "</select>";
-   echo "</td></tr>";
-
    // IP is active
-   echo "<tr><td><label>Is active</label></td><td><input type='hidden' name='ip_isactive' value='0'>";
+   echo "<tr><td><label>{$cfgData['IPActive']}</label></td><td><input type='hidden' name='ip_isactive' value='0'>";
    if ($newDevice === true)
    {
       echo "<input type='checkbox' name='ip_isactive' value='1'>";
@@ -106,17 +95,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    }
    echo "</td></tr>";
 
-   echo "<tr><td><label>MAC Address</label></td><td><input type='text' name='mac' value='". ($newDevice ? "'" : htmlspecialchars($device['mac']))."'></td></tr>";
-   echo "<tr><td><label>BT</label></td><td><input type='text' name='bt' value='". ($newDevice ? "'" : htmlspecialchars($device['bt']))."'></td></tr>";
-   echo "<tr><td><label>Serial Number (SN)</label></td><td><input type='text' name='sn' value='". ($newDevice ? "'" : htmlspecialchars($device['sn']))."'></td></tr>";
-   echo "<tr><td><label>IMEI 1</label></td><td><input type='text' name='IMEI1' value='". ($newDevice ? "'" : htmlspecialchars($device['IMEI1']))."'></td></tr>";
-   echo "<tr><td><label>IMEI 2</label></td><td><input type='text' name='IMEI2' value='". ($newDevice ? "'" : htmlspecialchars($device['IMEI2']))."'></td></tr>";
-   echo "<tr><td><label>Part Number (PN)</label></td><td><input type='text' name='pn' value='". ($newDevice ? "'" : htmlspecialchars($device['pn']))."'></td></tr>";
-   echo "<tr><td><label>Firmware</label></td><td><input type='text' name='firmware' value='". ($newDevice ? "'" : htmlspecialchars($device['firmware']))."'></td></tr>";
-   echo "<tr><td><label>Custodian</label></td><td><input type='text' name='custodian' value='". ($newDevice ? "'" : htmlspecialchars($device['custodian']))."'></td></tr>";
+   // IP Address 2
+   echo "<tr><td><label>{$cfgData['IP2']}</label></td><td>";
+   echo "<select name='ip2_id' id='ip'>";
+   echo "<option value=''>-- Select IP --</option>";
+   foreach ($ip_list as $ip)
+   {
+      $selected = $ip['ID'] == $device['ip2_id'] ? 'selected' : '';
+      echo "<option value='". htmlspecialchars($ip['ID']) . "' $selected>". htmlspecialchars($ip['IPv4'])."</option>";
+   }
+   echo "</select>";
+   echo "</td></tr>";
+
+   echo "<tr><td><label>{$cfgData['MAC']}</label></td><td><input type='text' name='mac' value='". ($newDevice ? "'" : htmlspecialchars($device['mac']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['BT']}</label></td><td><input type='text' name='bt' value='". ($newDevice ? "'" : htmlspecialchars($device['bt']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['SN']}</label></td><td><input type='text' name='sn' value='". ($newDevice ? "'" : htmlspecialchars($device['sn']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['IMEI1']}</label></td><td><input type='text' name='IMEI1' value='". ($newDevice ? "'" : htmlspecialchars($device['IMEI1']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['IMEI2']}</label></td><td><input type='text' name='IMEI2' value='". ($newDevice ? "'" : htmlspecialchars($device['IMEI2']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['PN']}</label></td><td><input type='text' name='pn' value='". ($newDevice ? "'" : htmlspecialchars($device['pn']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['Firmware']}</label></td><td><input type='text' name='firmware' value='". ($newDevice ? "'" : htmlspecialchars($device['firmware']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['Custodian']}</label></td><td><input type='text' name='custodian' value='". ($newDevice ? "'" : htmlspecialchars($device['custodian']))."'></td></tr>";
    
    // Location 1
-      echo "<tr><td><label>Production Line</label></td><td>";
+      echo "<tr><td><label>{$cfgData['Location1']}</label></td><td>";
    echo "<select name='location1' id='location1'>";
    echo "<option value=''>-- Select location1 --</option>";
    foreach ($locations as $location)
@@ -128,10 +129,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    echo "</td></tr>";
    
    
-   echo "<tr><td><label>Workstation</label></td><td><input type='text' name='location2' value='". ($newDevice ? "'" : htmlspecialchars($device['location1']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['Location2']}</label></td><td><input type='text' name='location2' value='". ($newDevice ? "'" : htmlspecialchars($device['location2']))."'></td></tr>";
 
    // Status
-   echo "<tr><td><label>Status</label></td><td>";
+   echo "<tr><td><label>{$cfgData['Status']}</label></td><td>";
    echo "<select name='status_id' id='status'>";
    echo "<option value=''>-- Select category --</option>";
    foreach ($statuses as $status)
@@ -141,9 +142,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    }
    echo "</select>";
    echo "</td></tr>";
-   echo "<tr><td><label>Purchased</label></td><td><input type='date' name='purchased' value='". ($newDevice ? "'" : htmlspecialchars($device['purchased']))."'></td></tr>";
-   echo "<tr><td><label>Disposed</label></td><td><input type='date' name='disposed' value='". ($newDevice ? "'" : htmlspecialchars($device['disposed']))."'></td></tr>";
-   echo "<tr><td><label>Notes</label></td><td><textarea name='notes' rows='4' value='". ($newDevice ? "'" : htmlspecialchars($device['notes']))."'></textarea></td></tr>";
+   echo "<tr><td><label>{$cfgData['Purchased']}</label></td><td><input type='date' name='purchased' value='". ($newDevice ? "'" : htmlspecialchars($device['purchased']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['Disposed']}</label></td><td><input type='date' name='disposed' value='". ($newDevice ? "'" : htmlspecialchars($device['disposed']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgData['Notes']}</label></td><td><textarea name='notes' rows='4' value='". ($newDevice ? "'" : htmlspecialchars($device['notes']))."'></textarea></td></tr>";
    echo "</table>";
 
    if (isset($_GET['addDevice']))

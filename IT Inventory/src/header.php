@@ -28,4 +28,17 @@ if (isset($_GET['show']))
 
 echo "</head><body>";
 
+// Load language
+$config = json_decode(file_get_contents('src/config.json'), true);
+$langCode = $config['language'];
+$langFile = "src/lng/{$langCode}.json";
+if (file_exists($langFile))
+{
+   $cfgData = json_decode(file_get_contents($langFile), true);
+}
+else
+{
+   $cfgData = []; // fallback if file missing
+}
+   
 ?>

@@ -6,14 +6,14 @@
 //   footer
 //-------------------------------------------------------------------------------------------------
 
-echo "<hr style='width: 80%'>";
+echo "\n<hr style='width: 80%'>";
 echo "<div name='settings' class='settings'>";
 
 // Add language
 $config = json_decode(file_get_contents('src/config.json'), true);
 $langCode = $config['language'];
       
-echo "<form method='get'><select name='lang' onchange='this.form.submit()'>";
+echo "\n<form method='get'><select name='lang' onchange='this.form.submit()'>";
 echo "<option value='en'"; if ($langCode === 'en') echo 'selected'; echo ">EN English</option>";
 echo "<option value='ro'"; if ($langCode === 'ro') echo 'selected'; echo ">RO Română</option>";
 echo "</select>";
@@ -24,7 +24,7 @@ foreach ($_GET as $key => $value)
 }
 echo "</form>";
 echo "</div>";
-echo "<hr style='width: 50%'>";
+echo "\n<hr style='width: 50%'>";
 echo "</body>";
 echo "</html>";
 ?>
