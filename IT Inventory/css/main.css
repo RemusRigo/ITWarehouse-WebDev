@@ -52,6 +52,11 @@ body {
    box-sizing: border-box;
 }
 
+.settings {
+   width: 400px; /* or any width you want */
+   margin: 0 auto; /* centers horizontally */ }
+}
+
 table.devices {
    border-collapse: collapse;
    /* border-collapse: separate; */

@@ -9,6 +9,7 @@
 
 session_start();
 
+
 // check if user is logged
 if (isset($_SESSION['user_id'])) {
    $loggedUser=htmlspecialchars($_SESSION['username']);
@@ -75,16 +76,16 @@ else if ($_SERVER['REQUEST_METHOD'] === 'GET')
       // check language
       if (isset($_GET['lang']))
       {
-         $config = json_decode(file_get_contents('src/config.json'), true);
+         $config = json_decode(file_get_contents('json/config.json'), true);
          $config['language'] = $_GET['lang'];
-         file_put_contents('src/config.json', json_encode($config, JSON_PRETTY_PRINT));
+         file_put_contents('json/config.json', json_encode($config, JSON_PRETTY_PRINT));
          $back = $_SERVER['HTTP_REFERER'] ?? 'index.php';
          header("Location: $back");
       }
       
       // process other params individually
       $action=null;
-      foreach (['addDevice','updateDevice','edit','IP','search','show'] as $key)
+      foreach (['addDevice','updateDevice','edit','IP','search'] as $key)
       {
          if (isset($_GET[$key]))
          {
@@ -103,11 +104,12 @@ else if ($_SERVER['REQUEST_METHOD'] === 'GET')
          case 'IP':
             include 'src/ip.php';
             break;
-
-         case 'show':
-            $showDevice=htmlspecialchars($_GET['show']);
-            include 'src/show.php';
-            break;           
+      }
+      
+      if (isset($_GET['cat']))
+      {
+         $showCat=htmlspecialchars($_GET['cat']);
+         include 'src/show.php';
       }
    }
 }
