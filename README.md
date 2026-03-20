@@ -22,6 +22,9 @@ A tool to monitor all IT devices
 
 ## Roadmap
 
+* 2026-03-20: Fix: show notes with paragraphs (if entered) instead of a single line of data
+* 2026-03-20: Fix: notes not showing on edit device
+* 2026-03-20: Add: phone number
 * 2026-03-02: Edit: use JSON to save language settings instead of php file
 * 2026-02-27: Add: Language support
 * 2026-02-27: Add: Implement Location
