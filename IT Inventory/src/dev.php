@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v20260311
+//         v20260320
 //   Add/Update device
 //-------------------------------------------------------------------------------------------------
 
@@ -109,6 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    echo "<tr><td><label>{$cfgLang['MAC']}</label></td><td><input type='text' name='mac' value='". ($newDevice ? "'" : htmlspecialchars($device['mac']))."'></td></tr>";
    echo "<tr><td><label>{$cfgLang['BT']}</label></td><td><input type='text' name='bt' value='". ($newDevice ? "'" : htmlspecialchars($device['bt']))."'></td></tr>";
    echo "<tr><td><label>{$cfgLang['SN']}</label></td><td><input type='text' name='sn' value='". ($newDevice ? "'" : htmlspecialchars($device['sn']))."'></td></tr>";
+   echo "<tr><td><label>{$cfgLang['PhoneNumber']}</label></td><td><input type='text' name='phone_no' value='". ($newDevice ? "'" : htmlspecialchars($device['phone_no']))."'></td></tr>";
    echo "<tr><td><label>{$cfgLang['IMEI1']}</label></td><td><input type='text' name='IMEI1' value='". ($newDevice ? "'" : htmlspecialchars($device['IMEI1']))."'></td></tr>";
    echo "<tr><td><label>{$cfgLang['IMEI2']}</label></td><td><input type='text' name='IMEI2' value='". ($newDevice ? "'" : htmlspecialchars($device['IMEI2']))."'></td></tr>";
    echo "<tr><td><label>{$cfgLang['PN']}</label></td><td><input type='text' name='pn' value='". ($newDevice ? "'" : htmlspecialchars($device['pn']))."'></td></tr>";
@@ -143,7 +144,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    echo "</td></tr>";
    echo "<tr><td><label>{$cfgLang['Purchased']}</label></td><td><input type='date' name='purchased' value='". ($newDevice ? "'" : htmlspecialchars($device['purchased']))."'></td></tr>";
    echo "<tr><td><label>{$cfgLang['Disposed']}</label></td><td><input type='date' name='disposed' value='". ($newDevice ? "'" : htmlspecialchars($device['disposed']))."'></td></tr>";
-   echo "<tr><td><label>{$cfgLang['Notes']}</label></td><td><textarea name='notes' rows='4' value='". ($newDevice ? "'" : htmlspecialchars($device['notes']))."'></textarea></td></tr>";
+// echo "<tr><td><label>{$cfgLang['Notes']}</label></td><td><textarea name='notes' rows='4' value='". ($newDevice ? "'" : htmlspecialchars($device['notes']))."'></textarea></td></tr>";
+   echo "<tr><td><label>{$cfgLang['Notes']}</label></td><td><textarea name='notes' rows='4'>". ($newDevice ? "'" : htmlspecialchars($device['notes']))."</textarea></td></tr>";
    echo "</table>";
 
    if (isset($_GET['addDevice']))
@@ -186,6 +188,7 @@ function AddDevice()
    $mac = EmptyToNull($_POST['mac']);
    $bt = EmptyToNull($_POST['bt']);
    $sn = EmptyToNull($_POST['sn']);
+   $phone_no = EmptyToNull($_POST['phone_no']);
    $IMEI1 = EmptyToNull($_POST['IMEI1']);
    $IMEI2 = EmptyToNull($_POST['IMEI2']);
    $pn = EmptyToNull($_POST['pn']);
@@ -196,25 +199,25 @@ function AddDevice()
    $purchased = EmptyToNull($_POST['purchased']);
    $status = EmptyToNull($_POST['status_id']);
    $disposed = EmptyToNull($_POST['disposed']);
-   $notes = EmptyToNull($_POST['notes']);
+   $notes = $_POST['notes'];
 
    // SQL statement
    $stmt = $conn->prepare("INSERT INTO devices (
       name,
       device,
       manufacturer, model, category_id, inventory,
-      ip_id, ip2_id, ip_isactive, mac, bt, sn, IMEI1, IMEI2, pn, firmware,
+      ip_id, ip2_id, ip_isactive, mac, bt, sn, phone_no, IMEI1, IMEI2, pn, firmware,
       custodian, location1, location2,
       status_id, purchased, disposed,
       notes)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
    ");
 
    $stmt->bind_param("sssssssssssssssssssssss",
       $name,
       $device,
       $manufacturer, $model, $category, $inventory,
-      $ip, $ip2, $ip_isactive, $mac, $bt, $sn, $IMEI1, $IMEI2, $pn, $firmware,
+      $ip, $ip2, $ip_isactive, $mac, $bt, $sn, $phone_no, $IMEI1, $IMEI2, $pn, $firmware,
       $custodian, $location1, $location2,
       $status, $purchased, $disposed,
       $notes);
@@ -259,6 +262,7 @@ function UpdateDevice()
    $mac = EmptyToNull($_POST['mac']);
    $bt = EmptyToNull($_POST['bt']);
    $sn = EmptyToNull($_POST['sn']);
+   $phone_no = EmptyToNull($_POST['phone_no']);
    $IMEI1 = EmptyToNull($_POST['IMEI1']);
    $IMEI2 = EmptyToNull($_POST['IMEI2']);
    $sn = EmptyToNull($_POST['sn']);
@@ -270,28 +274,23 @@ function UpdateDevice()
    $purchased = EmptyToNull($_POST['purchased']);
    $status_id = EmptyToNull($_POST['status_id']);
    $disposed = EmptyToNull($_POST['disposed']);
-   $notes = EmptyToNull($_POST['notes']);
+   $notes = $_POST['notes'];
 
    $sql = "UPDATE devices SET
       name = ?, device = ?,
       manufacturer = ?, model = ?, category_id = ?, inventory = ?,
-      ip_id = ?, ip2_id = ?, ip_isactive = ?, mac = ?, bt = ?, sn = ?, IMEI1 = ?, IMEI2 = ?, pn = ?, firmware = ?,
+      ip_id = ?, ip2_id = ?, ip_isactive = ?, mac = ?, bt = ?, sn = ?, phone_no = ?, IMEI1 = ?, IMEI2 = ?, pn = ?, firmware = ?,
       custodian = ?, location1 = ?, location2 = ?,
       status_id = ?, purchased = ?, disposed = ?, notes = ?
       WHERE id = ?";
 
    $stmt = $pdo->prepare($sql);
    
-   $stmt->execute([$name, $device, $manufacturer, $model, $category_id, $inventory, $ip_id, $ip2_id, $ip_isactive, $mac, $bt, $sn, $IMEI1, $IMEI2, $pn, $firmware,
+   $stmt->execute([$name, $device, $manufacturer, $model, $category_id, $inventory, $ip_id, $ip2_id, $ip_isactive, $mac, $bt, $sn, $phone_no, $IMEI1, $IMEI2, $pn, $firmware,
       $custodian, $location1, $location2, $status_id, $purchased, $disposed, $notes, $id]);
 
    $stmt = null;
 
-   // go back & refresh page
-   //$configPath = __DIR__ . '/../json/config.json';
-   //$config = json_decode(file_get_contents($configPath), true); // always read data, if now only last setting will be written
-   //$config['refresh'] = true;
-   //file_put_contents($configPath, json_encode($config, JSON_PRETTY_PRINT));
    echo "<script>history.go(-2);</script>";
 }
 

@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v20260303
+//         v20260320
 //   show devices
 //-------------------------------------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ if ($showCat == "all")
          devices.device, devices.manufacturer, devices.model, category.name AS category_name,
          devices.inventory,
          ip.IPv4 as ip_id, ip2.IPv4 as ip2_id, devices.ip_isactive,
-         devices.mac, devices.bt, devices.sn, devices.IMEI1, devices.IMEI2, devices.pn, devices.firmware,
+         devices.mac, devices.bt, devices.sn, devices.phone_no, devices.IMEI1, devices.IMEI2, devices.pn, devices.firmware,
          devices.custodian,
          locations.name as location1, devices.location2,
          status.name AS status_name, devices.purchased, devices.disposed,
@@ -41,7 +41,7 @@ else
             devices.device, devices.manufacturer, devices.model, category.name AS category_name,
             devices.inventory,
             ip.IPv4 as ip_id, ip2.IPv4 as ip2_id, devices.ip_isactive,
-            devices.mac, devices.bt, devices.sn, devices.IMEI1, devices.IMEI2, devices.pn, devices.firmware,
+            devices.mac, devices.bt, devices.sn, devices.phone_no, devices.IMEI1, devices.IMEI2, devices.pn, devices.firmware,
             devices.custodian,
             locations.name as location1, devices.location2,
             status.name AS status_name, devices.purchased, devices.disposed,
@@ -91,6 +91,7 @@ if ($result->num_rows > 0)
    echo "<th>{$cfgLang['MAC']}</th>";
    echo "<th>{$cfgLang['BT']}</th>";
    echo "<th>{$cfgLang['SN']}</th>";
+   echo "<th>{$cfgLang['PhoneNumber']}</th>";
    echo "<th>{$cfgLang['IMEI1']}</th>";
    echo "<th>{$cfgLang['IMEI2']}</th>";
    echo "<th>{$cfgLang['PN']}</th>";
@@ -128,6 +129,7 @@ if ($result->num_rows > 0)
    echo "<th></th>"; // MAC
    echo "<th></th>"; // BT
    echo "<th></th>"; // SN
+   echo "<th></th>"; // Phone_No
    echo "<th></th>"; // IMEI1
    echo "<th></th>"; // IMEI2
    echo "<th></th>"; // PN
@@ -167,6 +169,7 @@ if ($result->num_rows > 0)
       echo "<td>" . htmlspecialchars($row['mac']) . "</td>";
       echo "<td>" . htmlspecialchars($row['bt']) . "</td>";
       echo "<td>" . htmlspecialchars($row['sn']) . "</td>";
+      echo "<td>" . htmlspecialchars($row['phone_no']) . "</td>";
       echo "<td>" . htmlspecialchars($row['IMEI1']) . "</td>";
       echo "<td>" . htmlspecialchars($row['IMEI2']) . "</td>";
       echo "<td>" . htmlspecialchars($row['pn']) . "</td>";
@@ -177,7 +180,8 @@ if ($result->num_rows > 0)
       echo "<td>" . htmlspecialchars($row['status_name']) . "</td>";
       echo "<td>" . ($row['purchased'] === null ? '' : htmlspecialchars($row['purchased'])) . "</td>";
       echo "<td>" . ($row['disposed'] === null ? '' : htmlspecialchars($row['disposed'])) . "</td>";
-      echo "<td>" . htmlspecialchars($row['notes']) . "</td>";
+      // echo "<td>" . htmlspecialchars($row['notes']) . "</td>"; // show notes on one line
+      echo "<td style=\"white-space: pre-line;\">" . htmlspecialchars($row['notes']) . "</td>"; // show notes as entered, with paragraphs
       echo "</tr>";
    }
    echo "</tbody></table>";
