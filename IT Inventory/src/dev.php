@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    echo "<tr><td><label>{$cfgLang['Purchased']}</label></td><td><input type='date' name='purchased' value='". ($newDevice ? "'" : htmlspecialchars($device['purchased']))."'></td></tr>";
    echo "<tr><td><label>{$cfgLang['Disposed']}</label></td><td><input type='date' name='disposed' value='". ($newDevice ? "'" : htmlspecialchars($device['disposed']))."'></td></tr>";
 // echo "<tr><td><label>{$cfgLang['Notes']}</label></td><td><textarea name='notes' rows='4' value='". ($newDevice ? "'" : htmlspecialchars($device['notes']))."'></textarea></td></tr>";
-   echo "<tr><td><label>{$cfgLang['Notes']}</label></td><td><textarea name='notes' rows='4'>". ($newDevice ? "'" : htmlspecialchars($device['notes']))."</textarea></td></tr>";
+   echo "<tr><td><label>{$cfgLang['Notes']}</label></td><td><textarea name='notes' rows='4'>". ($newDevice ? "" : htmlspecialchars($device['notes']))."</textarea></td></tr>";
    echo "</table>";
 
    if (isset($_GET['addDevice']))
@@ -213,7 +213,7 @@ function AddDevice()
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
    ");
 
-   $stmt->bind_param("sssssssssssssssssssssss",
+   $stmt->bind_param("ssssssssssssssssssssssss",
       $name,
       $device,
       $manufacturer, $model, $category, $inventory,

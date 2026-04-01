@@ -6,6 +6,9 @@
 //   show devices
 //-------------------------------------------------------------------------------------------------
 
+// starting time for sql query
+$start = microtime(true);
+
 if ($showCat == "all")
 {
    $sql = "SELECT
@@ -72,18 +75,30 @@ $result = $conn->query($sql);
 $resultModels = $conn->query($sqlModels);
 $models = [];
 
+// ending time for sql query
+$end = microtime(true);
 
 if ($result->num_rows > 0)
 {
    // Header row
    echo "\n<table name='devices' id='devices' class='devices'>";
    echo "<thead>";
+
    echo "\n<tr>";
    echo "<th>ID</th>";
    echo "<th>{$cfgLang['Name']}</th>";
    echo "<th>{$cfgLang['Device']}</th>";
    echo "<th>{$cfgLang['Manufacturer']}</th>";
-   echo "<th>{$cfgLang['Model']}</th>";
+   echo "<th>{$cfgLang['Model']}<br>";
+   // Model filter
+   echo "<select id='filterModel' onchange=\"updateFilter('model')\">";
+   echo "<option value=''>All</option>";
+   while ($row = $resultModels->fetch_assoc())
+   {
+      $model = htmlspecialchars($row['model'], ENT_QUOTES);
+      echo "<option value='$model'>$model</option>";
+   }
+   echo "</select></th>";
    echo "<th>{$cfgLang['Category']}</th>";
    echo "<th>{$cfgLang['Inventory']}</th>";
    echo "<th>{$cfgLang['IP1']}</th>";
@@ -104,45 +119,7 @@ if ($result->num_rows > 0)
    echo "<th>{$cfgLang['Disposed']}</th>";
    echo "<th>{$cfgLang['Notes']}</th>";
    echo "</tr>";
-   
-   // Filter row
-   echo "\n<tr>";
-   echo "<th></th>"; // ID
-   echo "<th></th>"; // Name
-   echo "<th></th>"; // Device
-   echo "<th></th>"; // Manufacturer
-   
-   // Model
-   echo "<th><select id='filterModel' onchange=\"updateFilter('model')\">";
-   echo "<option value=''>All</option>";
-   while ($row = $resultModels->fetch_assoc())
-   {
-      $model = htmlspecialchars($row['model'], ENT_QUOTES);
-      echo "<option value='$model'>$model</option>";
-   }
-   echo "</select></th>";
-   
-   echo "<th></th>"; // Category
-   echo "<th></th>"; // Inventory
-   echo "<th></th>"; // IP1
-   echo "<th></th>"; // IP2
-   echo "<th></th>"; // MAC
-   echo "<th></th>"; // BT
-   echo "<th></th>"; // SN
-   echo "<th></th>"; // Phone_No
-   echo "<th></th>"; // IMEI1
-   echo "<th></th>"; // IMEI2
-   echo "<th></th>"; // PN
-   echo "<th></th>"; // Firmware
-   echo "<th></th>"; // Custodian
-   echo "<th></th>"; // Location1
-   echo "<th></th>"; // Location2
-   echo "<th></th>"; // Status
-   echo "<th></th>"; // Purchased
-   echo "<th></th>"; // Disposed
-   echo "<th></th>"; // Notes
-   echo "</tr>";
-   
+
    echo "</thead><tbody>";
 
    while ($row = $result->fetch_assoc())
@@ -180,11 +157,14 @@ if ($result->num_rows > 0)
       echo "<td>" . htmlspecialchars($row['status_name']) . "</td>";
       echo "<td>" . ($row['purchased'] === null ? '' : htmlspecialchars($row['purchased'])) . "</td>";
       echo "<td>" . ($row['disposed'] === null ? '' : htmlspecialchars($row['disposed'])) . "</td>";
-      // echo "<td>" . htmlspecialchars($row['notes']) . "</td>"; // show notes on one line
       echo "<td style=\"white-space: pre-line;\">" . htmlspecialchars($row['notes']) . "</td>"; // show notes as entered, with paragraphs
       echo "</tr>";
    }
    echo "</tbody></table>";
+
+   $totalRows = $result->num_rows;
+   echo "<p style='font-size:smaller;'>".$totalRows . " record" . ($totalRows == 1 ? "" : "s") . " found in ". ($end - $start) ." seconds";
+
 }
 else
 {
